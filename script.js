@@ -47,39 +47,80 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   // -----------------------------
-  // GitHub stars fetch (tiny + safe)
+  // GitHub stars fetch (defer until after first paint)
   // -----------------------------
   const starEls = document.querySelectorAll('[data-repo]');
   const CACHE_KEY = 'github-stars-cache';
 
-  let cache = {};
-  try {
-    cache = JSON.parse(sessionStorage.getItem(CACHE_KEY)) || {};
-  } catch (_) {}
-
-  starEls.forEach(async (el) => {
-    const repo = el.getAttribute('data-repo');
-    if (!repo) return;
-
-    // use cache if available
-    if (cache[repo]) {
-      el.textContent = `★ ${cache[repo]}`;
-      return;
-    }
-
+  function loadStarsWhenIdle() {
+    let cache = {};
     try {
-      const res = await fetch(`https://api.github.com/repos/${repo}`);
-      if (!res.ok) throw new Error('GitHub API error');
+      cache = JSON.parse(sessionStorage.getItem(CACHE_KEY)) || {};
+    } catch (_) {}
 
-      const data = await res.json();
-      const stars = data.stargazers_count ?? 0;
+    // Render cached values immediately (no network)
+    starEls.forEach((el) => {
+      const repo = el.getAttribute('data-repo');
+      if (!repo) return;
+      if (cache[repo]) el.textContent = `★ ${cache[repo]}`;
+    });
 
-      el.textContent = `★ ${stars}`;
-      cache[repo] = stars;
-      sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-    } catch (_) {
-      // fail silently
-      el.textContent = '★ —';
-    }
-  });
+    // Start network only after the page is fully loaded
+    const run = async () => {
+      // limit concurrency to avoid spamming network
+      const repos = Array.from(starEls)
+        .map((el) => el.getAttribute('data-repo'))
+        .filter(Boolean);
+
+      const uniqueRepos = [...new Set(repos)];
+
+      const CONCURRENCY = 2;
+      let idx = 0;
+
+      async function worker() {
+        while (idx < uniqueRepos.length) {
+          const repo = uniqueRepos[idx++];
+          if (!repo || cache[repo]) continue;
+
+          try {
+            const res = await fetch(`https://api.github.com/repos/${repo}`, {
+              cache: 'force-cache',
+            });
+            if (!res.ok) throw new Error('GitHub API error');
+            const data = await res.json();
+            const stars = data.stargazers_count ?? 0;
+
+            cache[repo] = stars;
+            sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+
+            // Update all elements for this repo
+            starEls.forEach((el) => {
+              if (el.getAttribute('data-repo') === repo) {
+                el.textContent = `★ ${stars}`;
+              }
+            });
+          } catch (_) {
+            // leave as-is (★ stars) or show placeholder
+            starEls.forEach((el) => {
+              if (el.getAttribute('data-repo') === repo) el.textContent = '★ —';
+            });
+          }
+        }
+      }
+
+      await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+    };
+
+    // Kick after load + idle (keeps it out of LCP chain)
+    const start = () => {
+      if ('requestIdleCallback' in window)
+        requestIdleCallback(run, { timeout: 2500 });
+      else setTimeout(run, 1200);
+    };
+
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+  }
+
+  if (starEls.length) loadStarsWhenIdle();
 })();
