@@ -29,13 +29,13 @@ This project focuses on:
 │   ├── images/          # Static assets
 │   ├── index.html       # Main HTML file
 │   ├── output.css       # Generated Tailwind CSS
-│   └── script.js        # Theme toggle & JS
+│   ├── script.js        # Theme toggle & JS
+│   └── CNAME            # Custom domain (GitHub Pages)
 ├── input.css            # Tailwind entry file
 ├── tailwind.config.js   # Tailwind configuration
 ├── package.json
 ├── package-lock.json
 ├── .gitignore
-└── CNAME                # Custom domain (GitHub Pages)
 ```
 
 ## 🌐 Live Preview
