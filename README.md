@@ -25,7 +25,7 @@ This project focuses on:
 
 ```txt
 .
-├── public/
+├── docs/
 │   ├── images/          # Static assets
 │   ├── index.html       # Main HTML file
 │   ├── output.css       # Generated Tailwind CSS
@@ -63,7 +63,7 @@ This will:
 
 - Compile Tailwind CSS
 - Watch for changes
-- Output CSS to public/output.css
+- Output CSS to docs/output.css
 
 3. 🏗️ Build for Production
 
@@ -85,7 +85,7 @@ This project is 100% static, so it works great with:
 
 If using GitHub Pages:
 
-- public/ is served as the root
+- docs/ is served as the root
 - CNAME is used for a custom domain
 
 If you liked it then please show your love by ⭐ the repo
