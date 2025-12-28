@@ -95,9 +95,9 @@
     Skip to content
   </a>
 
-  <main id="content" class="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8" tabindex="-1">
+  <main id="content" class="max-w-5xl px-4 py-6 mx-auto sm:px-6 lg:px-8" tabindex="-1">
     <!-- Top row: title left, theme toggle right -->
-    <div class="mb-4 flex items-center justify-between">
+    <div class="flex items-center justify-between mb-4">
       <div class="text-sm text-slate-600 dark:text-slate-400">
         <span aria-label="Location">Mumbai, India</span>
         <span aria-hidden="true"> · </span>
@@ -118,15 +118,15 @@
     <section class="grid grid-cols-1 gap-3 md:grid-cols-12" aria-label="Portfolio sections">
       <!-- Profile / Intro -->
       <article
-        class="md:col-span-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        class="p-4 bg-white border shadow-sm md:col-span-5 rounded-2xl border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         aria-labelledby="intro-title">
         <div class="flex items-start gap-4">
           <img src="./images/sushant-rahate.png" alt="Portrait of Sushant Rahate"
-            class="h-24 w-24 shrink-0 rounded-2xl border border-slate-200 object-cover dark:border-slate-800 sm:h-28 sm:w-28"
+            class="object-cover w-24 h-24 border shrink-0 rounded-2xl border-slate-200 dark:border-slate-800 sm:h-28 sm:w-28"
             width="112" height="112" loading="lazy" decoding="async" />
 
           <div class="min-w-0">
-            <h1 id="intro-title" class="truncate text-xl font-semibold tracking-tight">
+            <h1 id="intro-title" class="text-xl font-semibold tracking-tight truncate">
               Sushant Rahate
               <span class="text-sm font-normal text-slate-500 dark:text-slate-400"> (he/him)</span>
             </h1>
@@ -152,14 +152,14 @@
 
       <!-- Work -->
       <article
-        class="md:col-span-7 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        class="p-4 bg-white border shadow-sm md:col-span-7 rounded-2xl border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         aria-labelledby="work-title">
         <div class="flex items-center justify-between gap-3">
           <h2 id="work-title" class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">Currently
             building</h2>
         </div>
 
-        <div class="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+        <div class="p-4 mt-3 border rounded-xl border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
           <div class="flex items-start justify-between gap-4">
             <div class="min-w-0">
               <p class="text-base font-semibold">
@@ -185,7 +185,7 @@
             </div>
 
             <a href="https://matriprofile.com" target="_blank" rel="noreferrer noopener"
-              class="shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-600"
+              class="px-3 py-2 text-sm font-medium bg-white border shadow-sm shrink-0 rounded-xl border-slate-200 text-slate-700 hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-600"
               aria-label="Visit MatriProfile website (opens in a new tab)">
               Visit
             </a>
@@ -195,26 +195,24 @@
 
       <!-- Code -->
       <article
-        class="md:col-span-7 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        class="p-4 bg-white border shadow-sm md:col-span-7 rounded-2xl border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         aria-labelledby="code-title">
         <div class="flex items-center justify-between gap-3">
           <h2 id="code-title" class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">Code</h2>
-          <a class="text-xs text-slate-500 underline underline-offset-4 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:text-slate-400 dark:hover:text-slate-200 dark:focus-visible:ring-slate-600"
+          <a class="text-xs underline text-slate-500 underline-offset-4 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:text-slate-400 dark:hover:text-slate-200 dark:focus-visible:ring-slate-600"
             href="https://github.com/sushantrahate?tab=repositories" target="_blank" rel="noreferrer noopener"
             aria-label="View all repositories on GitHub (opens in a new tab)">
             All repos
           </a>
         </div>
 
-        <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          <a class="group rounded-xl border border-slate-200 bg-slate-50 p-4 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600
-                  sm:col-span-2" href="https://github.com/sushantrahate/express-typescript-prisma-postgresql"
-            target="_blank" rel="noreferrer noopener">
+        <div class="grid grid-cols-1 gap-2 mt-3 sm:grid-cols-2">
+          <a class="p-4 border group rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600 sm:col-span-2"
+            href="https://github.com/sushantrahate/express-typescript-prisma-postgresql" target="_blank"
+            rel="noreferrer noopener">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <p class="truncate text-sm font-semibold">
+                <p class="text-sm font-semibold truncate">
                   express-typescript-prisma-postgresql
                 </p>
                 <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
@@ -229,13 +227,11 @@
             </div>
           </a>
 
-          <a class="group rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
+          <a class="p-3 border group rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
             href="https://github.com/sushantrahate/secure-nodejs-backend" target="_blank" rel="noreferrer noopener">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <p class="truncate text-sm font-semibold">secure-nodejs-backend</p>
+                <p class="text-sm font-semibold truncate">secure-nodejs-backend</p>
                 <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
                   Security-focused backend patterns covering auth, headers,
                   rate limiting, and hardening best practices.
@@ -248,13 +244,11 @@
             </div>
           </a>
 
-          <a class="group rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
+          <a class="p-3 border group rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
             href="https://github.com/sushantrahate/uni-response" target="_blank" rel="noreferrer noopener">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <p class="truncate text-sm font-semibold">
+                <p class="text-sm font-semibold truncate">
                   uni-response
                   <span class="text-xs font-medium text-slate-500 dark:text-slate-400">(npm)</span>
                 </p>
@@ -269,13 +263,11 @@
             </div>
           </a>
 
-          <a class="group rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
+          <a class="p-3 border group rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
             href="https://github.com/sushantrahate/docsify-darkly-theme" target="_blank" rel="noreferrer noopener">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <p class="truncate text-sm font-semibold">docsify-darkly-theme</p>
+                <p class="text-sm font-semibold truncate">docsify-darkly-theme</p>
                 <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
                   A clean dark Docsify theme for modern documentation.
                 </p>
@@ -287,13 +279,11 @@
             </div>
           </a>
 
-          <a class="group rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
+          <a class="p-3 border group rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600"
             href="https://github.com/sushantrahate/docker-mean-stack-nginx" target="_blank" rel="noreferrer noopener">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <p class="truncate text-sm font-semibold">
+                <p class="text-sm font-semibold truncate">
                   docker-mean-stack-nginx
                 </p>
                 <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
@@ -311,7 +301,7 @@
 
       <!-- Writing -->
       <article
-        class="md:col-span-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        class="p-4 bg-white border shadow-sm md:col-span-5 rounded-2xl border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         aria-labelledby="writing-title">
         <h2 id="writing-title" class="text-sm font-semibold tracking-wide text-slate-700 dark:text-slate-200">
           Writing
@@ -319,9 +309,8 @@
 
         <div class="mt-3 space-y-2">
           <a href="https://dev.to/sushantrahate/nodejs-authentication-best-practices-and-key-strategies-1npj"
-            target="_blank" rel="noreferrer noopener" class="block rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
+            target="_blank" rel="noreferrer noopener"
+            class="block p-3 border rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
                 <p class="text-sm font-semibold">
@@ -363,9 +352,8 @@
           </a>
 
           <a href="https://dev.to/sushantrahate/role-based-access-control-rbac-with-feature-centric-approach-oj5"
-            target="_blank" rel="noreferrer noopener" class="block rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
+            target="_blank" rel="noreferrer noopener"
+            class="block p-3 border rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
             <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
                 <p class="text-sm font-semibold">
@@ -406,9 +394,8 @@
             </div>
           </a>
 
-          <a href="http://mycfiles.blogspot.com/" target="_blank" rel="noreferrer noopener" class="block rounded-xl border border-slate-200 bg-slate-50 p-3 hover:bg-slate-100
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400
-                  dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
+          <a href="http://mycfiles.blogspot.com/" target="_blank" rel="noreferrer noopener"
+            class="block p-3 border rounded-xl border-slate-200 bg-slate-50 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-900 dark:focus-visible:ring-slate-600">
             <p class="text-sm font-semibold">MyCFiles</p>
             <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
               C programming blog.
@@ -419,7 +406,7 @@
     </section>
 
     <!-- Bottom socials -->
-    <footer class="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm" aria-label="Footer">
+    <footer class="flex flex-wrap items-center justify-between gap-3 mt-5 text-sm" aria-label="Footer">
       <p class="text-xs text-slate-500 dark:text-slate-400">© <span id="year"></span> Sushant Rahate</p>
 
       <nav class="flex items-center gap-3" aria-label="Social links">
@@ -467,7 +454,7 @@
                 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-600"
           href="https://x.com/sushantrahate" target="_blank" rel="noreferrer noopener"
           aria-label="X (opens in a new tab)">
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path
               d="M18.9 2H22l-6.8 7.8L23 22h-6.7l-5.2-6.7L5 22H2l7.4-8.5L1 2h6.8l4.7 6.1L18.9 2Zm-1.2 18h1.7L7.2 3.9H5.4L17.7 20Z" />
           </svg>
@@ -488,14 +475,14 @@
 
     <noscript>
       <p
-        class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
+        class="p-3 mt-4 text-sm border rounded-xl border-slate-200 bg-slate-50 text-slate-700 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300">
         This site works best with JavaScript enabled (theme toggle + repo star counts). Content is still readable
         without it.
       </p>
     </noscript>
   </main>
 
-  <script src="./script.js"></script>
+  <script src="/script.js" defer></script>
 </body>
 
 </html>

@@ -25,13 +25,15 @@
   function getInitialTheme() {
     const saved = localStorage.getItem('theme');
     if (saved === 'dark' || saved === 'light') return saved;
+
     const prefersDark =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches;
+
     return prefersDark ? 'dark' : 'light';
   }
 
-  // init theme
+  // init theme (safe even if you also run the "prevent flash" script in <head>)
   applyTheme(getInitialTheme());
 
   if (btn) {
@@ -47,80 +49,129 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   // -----------------------------
-  // GitHub stars fetch (defer until after first paint)
+  // GitHub stars (true lazy: viewport + idle + cache)
   // -----------------------------
-  const starEls = document.querySelectorAll('[data-repo]');
   const CACHE_KEY = 'github-stars-cache';
 
-  function loadStarsWhenIdle() {
-    let cache = {};
+  function readCache() {
     try {
-      cache = JSON.parse(sessionStorage.getItem(CACHE_KEY)) || {};
-    } catch (_) {}
+      return JSON.parse(sessionStorage.getItem(CACHE_KEY)) || {};
+    } catch (_) {
+      return {};
+    }
+  }
 
-    // Render cached values immediately (no network)
+  function writeCache(cache) {
+    try {
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    } catch (_) {}
+  }
+
+  function renderCachedStars(cache) {
+    const starEls = document.querySelectorAll('[data-repo]');
     starEls.forEach((el) => {
       const repo = el.getAttribute('data-repo');
       if (!repo) return;
-      if (cache[repo]) el.textContent = `★ ${cache[repo]}`;
+      const stars = cache[repo];
+      if (typeof stars === 'number') el.textContent = `★ ${stars}`;
     });
-
-    // Start network only after the page is fully loaded
-    const run = async () => {
-      // limit concurrency to avoid spamming network
-      const repos = Array.from(starEls)
-        .map((el) => el.getAttribute('data-repo'))
-        .filter(Boolean);
-
-      const uniqueRepos = [...new Set(repos)];
-
-      const CONCURRENCY = 2;
-      let idx = 0;
-
-      async function worker() {
-        while (idx < uniqueRepos.length) {
-          const repo = uniqueRepos[idx++];
-          if (!repo || cache[repo]) continue;
-
-          try {
-            const res = await fetch(`https://api.github.com/repos/${repo}`, {
-              cache: 'force-cache',
-            });
-            if (!res.ok) throw new Error('GitHub API error');
-            const data = await res.json();
-            const stars = data.stargazers_count ?? 0;
-
-            cache[repo] = stars;
-            sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-
-            // Update all elements for this repo
-            starEls.forEach((el) => {
-              if (el.getAttribute('data-repo') === repo) {
-                el.textContent = `★ ${stars}`;
-              }
-            });
-          } catch (_) {
-            // leave as-is (★ stars) or show placeholder
-            starEls.forEach((el) => {
-              if (el.getAttribute('data-repo') === repo) el.textContent = '★ —';
-            });
-          }
-        }
-      }
-
-      await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-    };
-
-    // Kick after load + idle (keeps it out of LCP chain)
-    const start = () => {
-      if ('requestIdleCallback' in window)
-        requestIdleCallback(run, { timeout: 2500 });
-      else setTimeout(run, 1200);
-    };
-
-    if (document.readyState === 'complete') start();
-    else window.addEventListener('load', start, { once: true });
   }
 
-  if (starEls.length) loadStarsWhenIdle();
+  async function fetchAndRenderStars() {
+    const starEls = document.querySelectorAll('[data-repo]');
+    if (!starEls.length) return;
+
+    let cache = readCache();
+    renderCachedStars(cache);
+
+    const repos = Array.from(starEls)
+      .map((el) => el.getAttribute('data-repo'))
+      .filter(Boolean);
+
+    const uniqueRepos = [...new Set(repos)].filter((r) => cache[r] == null);
+    if (!uniqueRepos.length) return;
+
+    const CONCURRENCY = 2;
+    let idx = 0;
+
+    async function worker() {
+      while (idx < uniqueRepos.length) {
+        const repo = uniqueRepos[idx++];
+        if (!repo) continue;
+
+        try {
+          const res = await fetch(`https://api.github.com/repos/${repo}`, {
+            // browser will still cache; this also prevents revalidation churn
+            cache: 'force-cache',
+          });
+          if (!res.ok) throw new Error('GitHub API error');
+          const data = await res.json();
+
+          const stars = Number(data.stargazers_count ?? 0);
+          cache[repo] = stars;
+          writeCache(cache);
+
+          // update all elements that match this repo
+          starEls.forEach((el) => {
+            if (el.getAttribute('data-repo') === repo)
+              el.textContent = `★ ${stars}`;
+          });
+        } catch (_) {
+          // keep placeholder
+          starEls.forEach((el) => {
+            if (el.getAttribute('data-repo') === repo && !el.textContent.trim())
+              el.textContent = '★ —';
+          });
+        }
+      }
+    }
+
+    await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  }
+
+  function runWhenIdle(fn) {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => fn(), { timeout: 2500 });
+    } else {
+      setTimeout(fn, 1200);
+    }
+  }
+
+  function startStarsLazyLoad() {
+    // render cache ASAP (no network)
+    renderCachedStars(readCache());
+
+    // If no IO support, fallback after load+idle
+    if (!('IntersectionObserver' in window)) {
+      const start = () => runWhenIdle(fetchAndRenderStars);
+      if (document.readyState === 'complete') start();
+      else window.addEventListener('load', start, { once: true });
+      return;
+    }
+
+    // Observe the first repo card (or the repo section) and only then fetch
+    const target =
+      document.querySelector('[data-repo]') ||
+      document.querySelector('#projects') ||
+      document.querySelector('main');
+
+    if (!target) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.some((e) => e.isIntersecting);
+        if (!hit) return;
+
+        io.disconnect();
+
+        // after it becomes visible, still wait for idle to avoid long tasks
+        runWhenIdle(fetchAndRenderStars);
+      },
+      { root: null, rootMargin: '400px 0px', threshold: 0.01 }
+    );
+
+    io.observe(target);
+  }
+
+  startStarsLazyLoad();
 })();
