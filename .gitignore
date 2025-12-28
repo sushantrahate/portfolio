@@ -8,10 +8,6 @@
 
 # deps
 node_modules/
-package.json
-package-lock.json
-input.css
-tailwind.config.js
 
 # logs
 logs/
