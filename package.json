@@ -1,0 +1,26 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx @tailwindcss/cli -i ./input.css -o ./output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i ./input.css -o ./output.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sushantrahate/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/sushantrahate/portfolio/issues"
+  },
+  "homepage": "https://github.com/sushantrahate/portfolio#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.18",
+    "tailwindcss": "^4.1.18"
+  }
+}
